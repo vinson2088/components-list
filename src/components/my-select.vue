@@ -18,7 +18,7 @@
       </div>
       <div class="options" v-show="optionsShow">
         <label for="selected">
-          <ul>
+          <ul class="options-box">
             <li
               class="options-list"
               v-for="(item, index) in options"
@@ -128,6 +128,9 @@ li {
   border-radius: 4px;
   min-width: 100%;
   z-index: 9999;
+}
+.options-box{
+  background-color: #fff;
 }
 .options-list {
   font-size: 14px;

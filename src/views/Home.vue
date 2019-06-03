@@ -3,13 +3,15 @@
     <p><myInput :type="type" :label="label" v-model="input"></myInput></p>
     <p><mySelect :label="label" :options="options" v-model="select"></mySelect></p>
     <p><mySwitch v-model="status" :label="label" oncolor="#44cc60" offcolor="#ef5353"></mySwitch></p>
-    <p><myProgress percent="50" color="#f00"></myProgress></p>
+    <p><myProgress percent="70" color="#f00"></myProgress></p>
     <p>
       <myBadge value="12" color="#f00">
         <myButton type="normal">按钮</myButton>
       </myBadge>
     </p>
     <p><myButton type="success">按钮</myButton></p>
+    <p><myDatepicker v-model="selectDate"></myDatepicker></p>
+    <p><mySlider color="#0f0" width="300" v-model="percent"></mySlider></p>
   </div>
 </template>
 
@@ -21,6 +23,8 @@ import mySwitch from '@/components/switch.vue'
 import myProgress from '@/components/progress.vue'
 import myBadge from '@/components/badge.vue'
 import myButton from '@/components/button.vue'
+import myDatepicker from '@/components/datepicker.vue'
+import mySlider from '@/components/slider.vue'
 
 export default {
   name: 'home',
@@ -30,7 +34,9 @@ export default {
     mySwitch,
     myProgress,
     myBadge,
-    myButton
+    myButton,
+    myDatepicker,
+    mySlider
   },
   data() {
     return {
@@ -45,6 +51,14 @@ export default {
       input: '',
       select: '',
       status: true,
+      selectDate: '',
+      tableData: [
+        {label: '123', value: 1},
+        {label: '123', value: 1},
+        {label: '123', value: 1},
+        {label: '123', value: 1}
+      ],
+      percent: 90
     }
   },
   methods: {}
