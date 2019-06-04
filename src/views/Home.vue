@@ -12,6 +12,7 @@
     <p><myButton type="success">按钮</myButton></p>
     <p><myDatepicker v-model="selectDate"></myDatepicker></p>
     <p><mySlider color="#0f0" width="300" v-model="percent"></mySlider></p>
+    <p><myPagination :total='total' v-model="current" :pagenumber="pagenumber"></myPagination></p>
   </div>
 </template>
 
@@ -25,6 +26,7 @@ import myBadge from '@/components/badge.vue'
 import myButton from '@/components/button.vue'
 import myDatepicker from '@/components/datepicker.vue'
 import mySlider from '@/components/slider.vue'
+import myPagination from '@/components/pagination.vue'
 
 export default {
   name: 'home',
@@ -36,7 +38,8 @@ export default {
     myBadge,
     myButton,
     myDatepicker,
-    mySlider
+    mySlider,
+    myPagination
   },
   data() {
     return {
@@ -58,7 +61,15 @@ export default {
         {label: '123', value: 1},
         {label: '123', value: 1}
       ],
-      percent: 90
+      percent: 90,
+      total: 105,
+      current: 1,
+      pagenumber: 10
+    }
+  },
+  watch: {
+    current() {
+      console.log(this.current)
     }
   },
   methods: {}

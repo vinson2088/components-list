@@ -3,27 +3,29 @@
     <div class="picker">
       <label for="datepicker-box">日期：</label>
       <input type="text" readonly="readonly" id="datepicker-box" name="datepicker-box" v-model="selectDate" @click="dropToggle">
-      <div class="dropdown-box" v-show="dropShow">
-        <div class="header">
-          <div class="left-btn" @click="prevMonth"><i class="iconfont icon-arrow"></i></div>
-          <div class="center-txt">{{year}}年{{month+1}}月</div>
-          <div class="right-btn" @click="nextMonth"><i class="iconfont icon-arrow"></i></div>
+      <transition name="slide-fade">
+        <div class="dropdown-box" v-show="dropShow">
+          <div class="header">
+            <div class="left-btn" @click="prevMonth"><i class="iconfont icon-arrow"></i></div>
+            <div class="center-txt">{{year}}年{{month+1}}月</div>
+            <div class="right-btn" @click="nextMonth"><i class="iconfont icon-arrow"></i></div>
+          </div>
+          <div class="body">
+            <ul class="date-place">
+              <li>星期一</li>
+              <li>星期二</li>
+              <li>星期三</li>
+              <li>星期四</li>
+              <li>星期五</li>
+              <li>星期六</li>
+              <li>星期日</li>
+            </ul>
+            <ul class="date-place">
+              <li v-for="(item, index) in monthList" :key="index"><a href="javascript:void(0)" class="date-item" @click="dateClick(item)">{{item}}</a></li>
+            </ul>
+          </div>
         </div>
-        <div class="body">
-          <ul class="date-place">
-            <li>星期一</li>
-            <li>星期二</li>
-            <li>星期三</li>
-            <li>星期四</li>
-            <li>星期五</li>
-            <li>星期六</li>
-            <li>星期日</li>
-          </ul>
-          <ul class="date-place">
-            <li v-for="(item, index) in monthList" :key="index"><a href="javascript:void(0)" class="date-item" @click="dateClick(item)">{{item}}</a></li>
-          </ul>
-        </div>
-      </div>
+      </transition>
     </div>
   </div>
 </template>
@@ -147,6 +149,7 @@ li{
   position: absolute;
   top: calc(100% + 5px);
   left: 0;
+  z-index: 9999;
 }
 .header::after,.date-place::after{
   content: '';
@@ -179,5 +182,15 @@ li{
 }
 .date-item:hover{
   background-color: #e1e1e1;
+}
+.slide-fade-enter-active{
+  transition: all .3s ease;
+}
+.slide-fade-leave-active{
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.5, 1.0)
+}
+.slide-fade-enter,.slide-fade-leave-to{
+  transform: translateY(-10px);
+  opacity: 0;
 }
 </style>

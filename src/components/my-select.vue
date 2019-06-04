@@ -16,8 +16,8 @@
         >
         <i class="iconfont icon-select" :class="{focus: selectFocus}"></i>
       </div>
-      <div class="options" v-show="optionsShow">
-        <label for="selected">
+      <transition name="slide-fade">
+        <div class="options" v-show="optionsShow">
           <ul class="options-box">
             <li
               class="options-list"
@@ -26,8 +26,8 @@
               @click="optionsListClick(item)"
             >{{item.label}}</li>
           </ul>
-        </label>
-      </div>
+        </div>
+      </transition>
     </div>
   </div>
 </template>
@@ -51,6 +51,8 @@ export default {
     },
     optionsListClick(item) {
       this.choose = item.label;
+      this.optionsShow = false;
+      this.selectFocus = false;
       this.$emit("input", item.value);
     }
   }
@@ -106,7 +108,6 @@ li {
   box-sizing: border-box;
   color: #606266;
   display: inline-block;
-  font-size: inherit;
   height: 40px;
   line-height: 40px;
   outline: none;
@@ -123,6 +124,7 @@ li {
 .options {
   position: absolute;
   top: calc(100% + 5px);
+  left: 0;
   border: 1px solid #dcdfe6;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   border-radius: 4px;
@@ -148,6 +150,16 @@ li {
 }
 .options-list:hover {
   background-color: #f5f7fa;
+}
+.slide-fade-enter-active{
+  transition: all .3s ease;
+}
+.slide-fade-leave-active{
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.5, 1.0)
+}
+.slide-fade-enter,.slide-fade-leave-to{
+  transform: translateY(-10px);
+  opacity: 0;
 }
 </style>
 <style scoped>
