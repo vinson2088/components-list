@@ -35,44 +35,52 @@
   </div>
 </template>
 <script>
-import mySelect from './my-select.vue'
 export default {
-  components: {
-    mySelect
-  },
   props: {
-    total: Number,
+    total: {
+      type: Number,
+      default: 0
+    },
     value: {
       type: Number,
       default: 1
     },
-    pagenumber: Number
+    pagenumber: {
+      type: Number,
+      default: 10
+    },
+    sizeArr: {
+      type: Array,
+      default: () => {
+        return [10, 20, 50, 100]
+      }
+    }
   },
   data() {
     return {
-      options: [
-        {label: '10条/页', value: 10},
-        {label: '20条/页', value: 20},
-        {label: '50条/页', value: 50},
-        {label: '100条/页', value: 100}
-      ],
+      options: [],
       select: '',
       selectFocus: false,
       optionsShow: false,
-      choose: '10条/页',
-      begin: true,
+      choose: '',
+      begin: false,
       last: true
+    }
+  },
+  created() {
+    this.showBackPrev();
+    this.getOptions();
+  },
+  watch: {
+    pageList() {
+      this.showBackPrev()
     }
   },
   computed: {
     pageList() {
-      let lastPage = Math.round(this.total / this.pagenumber);
-      this.begin = true;
-      this.last = true;
-      if(this.value === 1){
-        this.begin = false
-      } else if(this.value === lastPage) {
-        this.last = false
+      let lastPage = Math.ceil(this.total / this.pagenumber);
+      if(lastPage < this.value) {
+        this.$emit('input', lastPage);
       }
       let currentPage = {label: this.value, current: true};
       let arr = [];
@@ -99,13 +107,36 @@ export default {
       }
       for(let i = 0; i < owe2; i++) {
         let num = arr[0].label - 1
-        let obj = {label: num, current: false}
-        arr.unshift(obj)
+        if(num > 0) {
+          let obj = {label: num, current: false}
+          arr.unshift(obj)
+        }
       }
       return arr
     }
   },
   methods: {
+    getOptions() {
+      for(let i = 0; i < this.sizeArr.length; i++) {
+        let obj = {
+          label: this.sizeArr[i] + '条/页',
+          value: this.sizeArr[i]
+        }
+        this.options.push(obj);
+      }
+      this.choose = this.sizeArr[0] + '条/页'
+      this.$emit('sizeChange', this.sizeArr[0])
+    },
+    showBackPrev(){
+      let lastPage = Math.ceil(this.total / this.pagenumber);
+      this.begin = true;
+      this.last = true;
+      if(this.value === 1){
+        this.begin = false
+      } else if(this.value === lastPage) {
+        this.last = false
+      }
+    },
     currentBack() {
       let newCurrent = this.value - 1;
       this.$emit('input', newCurrent)
@@ -122,6 +153,7 @@ export default {
       this.choose = item.label;
       this.optionsShow = false;
       this.selectFocus = false;
+      this.$emit('sizeChange', item.value)
     },
     pageClick(number) {
       if(typeof(number) === 'number'){

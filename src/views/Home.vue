@@ -12,7 +12,10 @@
     <p><myButton type="success">按钮</myButton></p>
     <p><myDatepicker v-model="selectDate"></myDatepicker></p>
     <p><mySlider color="#0f0" width="300" v-model="percent"></mySlider></p>
-    <p><myPagination :total='total' v-model="current" :pagenumber="pagenumber"></myPagination></p>
+    <p><myPagination @sizeChange="sizeChange" :total='total' v-model="current" :pagenumber="pagenumber" :sizeArr="sizeArr"></myPagination></p>
+    <p><myImgBlock :data="imgBlockData" column="3"></myImgBlock></p>
+    <p><myRadio :data="radioList" v-model="radio" type="point"></myRadio></p>
+    <p><myCheckbox :data="checkboxList" v-model="checkbox" type="button"></myCheckbox></p>
   </div>
 </template>
 
@@ -27,6 +30,9 @@ import myButton from '@/components/button.vue'
 import myDatepicker from '@/components/datepicker.vue'
 import mySlider from '@/components/slider.vue'
 import myPagination from '@/components/pagination.vue'
+import myImgBlock from '@/components/imgBlock.vue'
+import myRadio from '@/components/radio.vue'
+import myCheckbox from '@/components/checkbox.vue'
 
 export default {
   name: 'home',
@@ -39,7 +45,10 @@ export default {
     myButton,
     myDatepicker,
     mySlider,
-    myPagination
+    myPagination,
+    myImgBlock,
+    myRadio,
+    myCheckbox
   },
   data() {
     return {
@@ -63,16 +72,35 @@ export default {
       ],
       percent: 90,
       total: 105,
-      current: 1,
-      pagenumber: 10
+      current: 2,
+      pagenumber: 10,
+      sizeArr: [20, 40, 60, 80],
+      imgBlockData: [
+        {img: require('./../assets/logo.png'), alt: '图片描述', text: '这是一条消息', link: 'https://www.google.com'},
+        {img: require('./../assets/logo.png'), alt: '图片描述', text: '这是一条消息', link: 'https://www.baidu.com'},
+        {img: require('./../assets/logo.png'), alt: '图片描述', text: '这是一条消息', link: 'https://cn.bing.com/'}
+      ],
+      radioList: [
+        {label: '选项一', value: 4},
+        {label: '选项二', value: 6},
+        {label: '选项三', value: 9},
+        {label: '选项四', value: 0}
+      ],
+      radio: '',
+      checkboxList: [
+        {label: '选项一', value: 1},
+        {label: '选项二', value: 2},
+        {label: '选项三', value: 3},
+        {label: '选项四', value: 4}
+      ],
+      checkbox: []
     }
   },
-  watch: {
-    current() {
-      console.log(this.current)
-    }
-  },
-  methods: {}
+  methods: {
+    sizeChange(num) {
+      this.pagenumber = num;
+    },
+  }
 }
 </script>
 <style scoped>
