@@ -25,7 +25,7 @@ npm run build
 
 ***
 ###select
-|   参数    | 取值            |
+|   参数     | 取值            |
 |  ----     | ----            |
 | options   | 内容数组         | 
 | label     | 说明文字         |
@@ -33,7 +33,7 @@ npm run build
 
 ***
 ###switch
-|   参数    | 取值            |
+|   参数     | 取值            |
 |  ----     | ----            |
 | oncolor   | 开启时的背景颜色  | 
 | offcolor  | 关闭时的背景颜色  |
@@ -42,41 +42,41 @@ npm run build
 
 ***
 ###progress
-|   参数    | 取值            |
+|   参数     | 取值            |
 |  ----     | ----            |
 | percent   | 进度条百分比     | 
 | color     | 进度条背景颜色   |
 
 ***
 ###badge
-|   参数    | 取值            |
+|   参数     | 取值            |
 |  ----     | ----            |
 | value     | 标记数目         | 
 | color     | 标记块的颜色     |
 
 ***
 ###button
-|   参数    | 取值            |
+|   参数     | 取值            |
 |  ----     | ----            |
 | type      | normal/success/info/warning/danger         | 
 | size      | big/middle/small     |
 
 ***
 ###datepicker
-|   参数    | 取值            |
+|   参数     | 取值            |
 |  ----     | ----            |
 | v-model   | 选择的日期 |
 
 ***
 ###slider
-|   参数    | 取值            |
+|   参数     | 取值            |
 |  ----     | ----            |
 | color     | 滑动条颜色 | 
 | v-model   | 滑动条位置。取值0-100 |
 
 ***
 ###pagination
-|   参数    | 取值            |
+|   参数     | 取值            |
 |  ----     | ----            |
 | total     | 总条目数 | 
 | pagenumber| 每页条目数|
@@ -85,7 +85,7 @@ npm run build
 
 ***
 ###radio
-|   参数    | 取值            |
+|   参数     | 取值            |
 |  ----     | ----            |
 | data     | 内容数组 | 
 | type     | pointer/button|
@@ -93,7 +93,7 @@ npm run build
 
 ***
 ###radio
-|   参数    | 取值            |
+|   参数     | 取值            |
 |  ----     | ----            |
 | data     | 内容数组 | 
 | type     | pointer/button|
