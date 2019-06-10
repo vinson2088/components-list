@@ -92,9 +92,11 @@ npm run build
 | v-model   | 当前选择的是第几个 |
 
 ***
-### radio
+### checkbox
 |   参数     | 取值            |
 |  ----     | ----            |
 | data     | 内容数组 | 
 | type     | pointer/button|
 | v-model   | 当前选择的是哪几个 |
+
+#### 具体请参考src/views/Home.vue
