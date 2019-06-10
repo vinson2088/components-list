@@ -22,6 +22,7 @@ export default {
     this.checkList = this.data.map(() => {
       return false
     });
+    this.checkList[this.value] = true
   },
   methods: {
     radioClick(num) {

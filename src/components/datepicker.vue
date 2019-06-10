@@ -7,7 +7,7 @@
         <div class="dropdown-box" v-show="dropShow">
           <div class="header">
             <div class="left-btn" @click="prevMonth"><i class="iconfont icon-arrow"></i></div>
-            <div class="center-txt">{{year}}年{{month+1}}月</div>
+            <div class="center-txt" @click="backNow">{{year}}年{{month+1}}月</div>
             <div class="right-btn" @click="nextMonth"><i class="iconfont icon-arrow"></i></div>
           </div>
           <div class="body">
@@ -21,7 +21,7 @@
               <li>星期日</li>
             </ul>
             <ul class="date-place">
-              <li v-for="(item, index) in monthList" :key="index"><a href="javascript:void(0)" class="date-item" @click="dateClick(item)">{{item}}</a></li>
+              <li v-for="(item, index) in monthList" :key="index"><a href="javascript:void(0)" class="date-item" :class="{active:nowDate === index}" @click="dateClick(index)">{{item}}</a></li>
             </ul>
           </div>
         </div>
@@ -31,12 +31,22 @@
 </template>
 <script>
 export default {
+  props: {
+    value: Date|String
+  },
   created() {
     let date = this.date = new Date();
     this.year = date.getFullYear();
     this.month = date.getMonth();
     this.day = date.getDate();
     this.getMonthList(this.year, this.month);
+    if(this.value){
+      const chooseDate = this.value;
+      let y = chooseDate.getFullYear();
+      let m = chooseDate.getMonth() + 1;
+      let d = chooseDate.getDate();
+      this.selectDate = y + '-' + m + '-' + d
+    }
   },
   data() {
     return {
@@ -48,10 +58,19 @@ export default {
       lastWeek: '',
       monthList: [],
       selectDate: '',
-      dropShow: false
+      dropShow: false,
+      nowDate: ''
     }
   },
   methods: {
+    backNow() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth();
+      this.year = year;
+      this.month = month;
+      this.getMonthList(year, month);
+    },
     dropToggle() {
       this.dropShow = !this.dropShow;
     },
@@ -74,14 +93,20 @@ export default {
     getMonthList(year, month) {
       let firstDay = new Date(year, month, 1);
       this.firstWeek = firstDay.getDay();
+      if(this.firstWeek === 0) {
+        this.firstWeek = 7
+      }
       let lastDay = new Date(year, month+1, 0);
       let monthListLength = lastDay.getDate() + 1;
       let monthList = Object.keys(new Int8Array(monthListLength)).map(Number);
       monthList.shift();
       let lastMonthDate = new Date(year, month, 0);
+      const now = new Date();
+      this.nowDate = now.getDate() - 1;
       for(let i = 1; i < this.firstWeek; i++){
         let lastMonthDay = lastMonthDate.getDate() + 1 - i
         monthList.unshift(lastMonthDay)
+        this.nowDate += 1;
       }
       this.lastWeek = lastDay.getDay();
       let minus = 8 - this.lastWeek;
@@ -92,10 +117,31 @@ export default {
         monthList.push(j)
       }
       this.monthList = monthList;
+      const nowMonth = now.getMonth();
+      const nowYear = now.getFullYear();
+      if(nowMonth !== month || nowYear !== year){
+        this.nowDate = ''
+      }
     },
-    dateClick(day){
-      this.selectDate = this.year + '-' + (+this.month+1) + '-' + day;
-      const chooseDate = new Date(this.year, this.month, +day);
+    dateClick(num){
+      const day = this.monthList[num];
+      let  month = this.month;
+      let year = this.year;
+      let dayMinus = num - day;
+      if(dayMinus > 5) {
+        month = this.month + 1
+      } else if(dayMinus < -1) {
+        month = this.month - 1
+      }
+      if(month > 11) {
+        month = 0;
+        year++
+      } else if(month < 0){
+        month = 11;
+        year--
+      }
+      this.selectDate = year + '-' + (+month+1) + '-' + day;
+      const chooseDate = new Date(year, month, day);
       this.dropShow = false;
       this.$emit("input", chooseDate);
     }
@@ -166,6 +212,7 @@ li{
   float: left;
   width: 50%;
   padding: 10px 0;
+  cursor: pointer;
 }
 .header .right-btn{
   transform: rotate(180deg);
@@ -179,6 +226,9 @@ li{
   color: #333;
   display: block;
   padding: 10px 5px;
+}
+.active{
+  background-color: #f0f0f0;
 }
 .date-item:hover{
   background-color: #e1e1e1;

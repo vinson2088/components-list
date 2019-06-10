@@ -12,12 +12,11 @@
 export default {
   props: {
     type: String,
-    label: String
+    label: String,
+    value: String
   },
   data() {
-    return {
-      value: ""
-    };
+    return {};
   },
   methods: {
     handleInput(event) {

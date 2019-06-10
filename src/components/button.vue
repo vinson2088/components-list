@@ -1,12 +1,16 @@
 <template>
-  <div class="button" :class="typeClass">
+  <div class="button" :class="[typeClass, sizeClass]">
     <slot></slot>
   </div>
 </template>
 <script>
 export default {
   props: {
-    type: String
+    type: String,
+    size: {
+      type: String,
+      default: 'middle'
+    }
   },
   data() {
     return {};
@@ -14,6 +18,14 @@ export default {
   computed: {
     typeClass() {
       return this.type;
+    },
+    sizeClass() {
+      if(this.size === 'big' || this.size === 'middle' || this.size === 'small') {
+        return this.size
+      } else {
+        console.error('按钮大小错误，已设置为默认值middle')
+        return 'middle'
+      }
     }
   }
 };
@@ -21,12 +33,14 @@ export default {
 <style scoped>
 .button {
   box-sizing: border-box;
-  padding: 10px 20px;
   border: 1px solid;
   color: #fff;
   display: inline-block;
   border-radius: 5px;
   cursor: pointer;
+}
+.button * {
+  box-sizing: inherit;
 }
 .normal {
   background-color: #fff;
@@ -77,7 +91,16 @@ export default {
 .danger:active {
   background-color: #ca5151;
 }
-.button * {
-  box-sizing: inherit;
+.big{
+  padding: 10px 20px;
+  font-size: 22px;
+}
+.middle{
+  padding: 5px 10px;
+  font-size: 14px;
+}
+.small{
+  padding: 2px 5px;
+  font-size: 12px;
 }
 </style>

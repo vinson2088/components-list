@@ -35,7 +35,8 @@
 export default {
   props: {
     label: String,
-    options: [Array]
+    options: [Array],
+    value: Number
   },
   data() {
     return {
@@ -43,6 +44,22 @@ export default {
       selectFocus: false,
       optionsShow: false
     };
+  },
+  created() {
+    for(let i = 0; i < this.options.length; i++){
+      if(this.options[i].value === this.value){
+        this.choose = this.options[i].label
+      }
+    }
+  },
+  watch: {
+    value() {
+      for(let i = 0; i < this.options.length; i++){
+        if(this.options[i].value === this.value){
+          this.choose = this.options[i].label
+        }
+      }
+    }
   },
   methods: {
     showOptions() {
