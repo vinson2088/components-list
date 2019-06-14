@@ -1,5 +1,5 @@
 <template>
-  <div class="button" :class="[typeClass, sizeClass]">
+  <div class="button" :class="[typeClass, size]">
     <slot></slot>
   </div>
 </template>
@@ -9,7 +9,15 @@ export default {
     type: String,
     size: {
       type: String,
-      default: 'middle'
+      validator (value) {
+        let arr = ['big', 'middle', 'small']
+        if(arr.indexOf(value) > -1){
+          return value
+        } else {
+          throw "button type格式错误"
+        }
+      },
+      default: "middle"
     }
   },
   data() {
@@ -18,14 +26,6 @@ export default {
   computed: {
     typeClass() {
       return this.type;
-    },
-    sizeClass() {
-      if(this.size === 'big' || this.size === 'middle' || this.size === 'small') {
-        return this.size
-      } else {
-        console.error('按钮大小错误，已设置为默认值middle')
-        return 'middle'
-      }
     }
   }
 };
@@ -91,15 +91,15 @@ export default {
 .danger:active {
   background-color: #ca5151;
 }
-.big{
+.big {
   padding: 10px 20px;
   font-size: 22px;
 }
-.middle{
+.middle {
   padding: 5px 10px;
   font-size: 14px;
 }
-.small{
+.small {
   padding: 2px 5px;
   font-size: 12px;
 }

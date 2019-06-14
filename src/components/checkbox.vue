@@ -1,9 +1,9 @@
 <template>
   <div class="checkbox">
-    <span v-for="(item, index) in data" :key="index" class="checkbox-box" :class="{check: value.indexOf(index) > -1, button: type === 'button'}">
+    <span v-for="(item, index) in data" :key="index" class="checkbox-box" :class="{check: value.indexOf(item.value) > -1, button: type === 'button'}">
       <span class="checkbox-simulation" v-if="type === 'point'"><i class="iconfont icon-tick"></i></span>
       <input type="checkbox" :name="'checkbox'+random" :id="'checkbox'+index" class="checkbox-input">
-      <label :for="'checkbox'+index" class="checkbox-label" @click="checkboxClick(index)">{{item.label}}</label>
+      <label :for="'checkbox'+index" class="checkbox-label" @click="checkboxClick(item.value)">{{item.label}}</label>
     </span>
   </div>
 </template>
@@ -14,6 +14,14 @@ export default {
     value: Array,
     type: {
       type: String,
+      validator (value) {
+        let arr = ['point', 'button']
+        if(arr.indexOf(value) > -1){
+          return value
+        } else {
+          throw "checkbox type格式错误"
+        }
+      },
       default: 'point'
     }
   },

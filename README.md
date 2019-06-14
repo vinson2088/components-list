@@ -99,4 +99,30 @@ npm run build
 | type     | pointer/button|
 | v-model   | 当前选择的是哪几个 |
 
+***
+### table
+|   参数     | 取值            |
+|  ----     | ----            |
+| data     | 内容数组 | 
+| config     | 配置信息 |
+```
+ // html部分
+ <myTable>
+  <button>按钮</button>
+ </myTable>
+```
+```
+ // script
+ data: [
+   {label: '内容1', value: '内容2'}
+   {label: '内容3', value: '内容4'}
+ ]
+ config: [
+   {title: '示例文字', key: 'label'},
+   {title: '示例标题', key: 'value'}，
+   {title: '操作'}
+ ]
+ // 这里config的title是显示在thead上的标题文字，key是对应到data要显示到列上内容的键。如果key是空的，则会寻找组件扩展的内容存放进去（如上方的button）。如果找不到，那这个td便留空
+```
+
 #### 具体请参考src/views/Home.vue

@@ -16,6 +16,12 @@
     <p><myImgBlock :data="imgBlockData" column="3"></myImgBlock></p>
     <p><myRadio :data="radioList" v-model="radio" type="point"></myRadio></p>
     <p><myCheckbox :data="checkboxList" v-model="checkbox" type="button"></myCheckbox></p>
+    <p>
+      <myTable :data="tableData" :config="tableConfig">
+        <myButton type="normal" size="middle">编辑</myButton>
+        <myButton type="normal" size="middle">删除</myButton>
+      </myTable>
+    </p>
   </div>
 </template>
 
@@ -33,6 +39,7 @@ import myPagination from '@/components/pagination.vue'
 import myImgBlock from '@/components/imgBlock.vue'
 import myRadio from '@/components/radio.vue'
 import myCheckbox from '@/components/checkbox.vue'
+import myTable from '@/components/table.vue'
 
 export default {
   name: 'home',
@@ -48,7 +55,8 @@ export default {
     myPagination,
     myImgBlock,
     myRadio,
-    myCheckbox
+    myCheckbox,
+    myTable
   },
   data() {
     return {
@@ -66,9 +74,14 @@ export default {
       selectDate: '',
       tableData: [
         {label: '123', value: 1},
-        {label: '123', value: 1},
-        {label: '123', value: 1},
-        {label: '123', value: 1}
+        {label: '1234', value: 12},
+        {label: '12345', value: 123},
+        {label: '123456', value: 1234}
+      ],
+      tableConfig: [
+        {title: '文字描述', key: 'label'},
+        {title: '操作'},
+        {title: '值', key: 'value'}
       ],
       percent: 90,
       total: 105,
@@ -89,9 +102,9 @@ export default {
       radio: '',
       checkboxList: [
         {label: '选项一', value: 1},
-        {label: '选项二', value: 2},
+        {label: '选项二', value: 6},
         {label: '选项三', value: 3},
-        {label: '选项四', value: 4}
+        {label: '选项四', value: 8}
       ],
       checkbox: []
     }

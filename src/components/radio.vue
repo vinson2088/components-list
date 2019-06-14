@@ -14,6 +14,14 @@ export default {
     value: String | Number,
     type: {
       type: String,
+      validator (value) {
+        let arr = ['point', 'button']
+        if(arr.indexOf(value) > -1){
+          return value
+        } else {
+          throw "radio type格式错误"
+        }
+      },
       default: 'point'
     }
   },
